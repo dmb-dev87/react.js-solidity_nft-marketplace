@@ -1,12 +1,13 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.4;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract NFTMarketplace is ReentrancyGuard {
+contract NFTMarketplace is ReentrancyGuard, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _itemCounter;
     Counters.Counter private _itemSoldCounter;
@@ -60,6 +61,10 @@ contract NFTMarketplace is ReentrancyGuard {
 
     constructor() {
         marketowner = payable(msg.sender);
+    }
+
+    function setListingPrice(uint256 _listingPrice) public onlyOwner {
+        listingPrice = _listingPrice;
     }
 
     function getListingPrice() public view returns (uint256) {
