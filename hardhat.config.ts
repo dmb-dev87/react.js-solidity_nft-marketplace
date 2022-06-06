@@ -1,10 +1,13 @@
-import * as dotenv from 'dotenv'
-import { task } from 'hardhat/config'
-import '@nomiclabs/hardhat-waffle'
+import dotenv from "dotenv"
+
+import { HardhatUserConfig, task } from "hardhat/config";
+import "@nomiclabs/hardhat-waffle";
 import '@nomiclabs/hardhat-etherscan'
 import '@typechain/hardhat'
 
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+dotenv.config()
+
+task("accounts", "Prints the list of accounts", async (args, hre) => {
   const accounts = await hre.ethers.getSigners()
 
   for (const account of accounts) {
@@ -12,11 +15,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 })
 
-module.exports = {
+const config: HardhatUserConfig = {
   solidity: "0.8.4",
   networks: {
     rinkeby: {
-      rul: process.env.RINKEBY_URL || '',
+      url: process.env.RINKEBY_URL || '',
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
   },
@@ -24,3 +27,5 @@ module.exports = {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
 }
+
+export default config
