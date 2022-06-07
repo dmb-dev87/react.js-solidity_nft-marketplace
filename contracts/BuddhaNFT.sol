@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -9,9 +9,10 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 contract BuddhaNFT is ERC721Enumerable, Ownable {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
+
     Counters.Counter private _tokenIds;
 
-    uint256 public constant MAX_SUPPLY = 5000;
+    uint256 public constant MAX_SUPPLY = 1000;
     uint256 public constant PRICE = 0.025 ether;
     uint256 public constant MAX_PER_MINT = 5;
 
@@ -26,7 +27,7 @@ contract BuddhaNFT is ERC721Enumerable, Ownable {
     function reserveNFTs() public onlyOwner {
         uint256 totalMinted = _tokenIds.current();
 
-        require(totalMinted.add(10) < MAX_SUPPLY, "Not enough NFTs!");
+        require(totalMinted.add(10) < MAX_SUPPLY, "Not enough NFTs.");
 
         for (uint256 i = 0; i < 10; i++) {
             _mintSingleNFT();
@@ -44,16 +45,16 @@ contract BuddhaNFT is ERC721Enumerable, Ownable {
     function mintNFTs(uint256 _count) public payable {
         uint256 totalMinted = _tokenIds.current();
 
-        require(totalMinted.add(_count) <= MAX_SUPPLY, "Not enough NFTs!");
+        require(totalMinted.add(_count) <= MAX_SUPPLY, "Not enough NFTs.");
 
         require(
             _count > 0 && _count <= MAX_PER_MINT,
-            "Cannot mint specified number of NFTs!"
+            "Cannot mint specified number of NFTs."
         );
 
         require(
             msg.value >= PRICE.mul(_count),
-            "Not enough ether to purchase NFTs!"
+            "Not enough ether to purchase NFTs."
         );
 
         for (uint256 i = 0; i < _count; i++) {
@@ -84,9 +85,9 @@ contract BuddhaNFT is ERC721Enumerable, Ownable {
 
     function withdraw() public payable onlyOwner {
         uint256 balance = address(this).balance;
-        require(balance > 0, "No ether left to withdraw!");
+        require(balance > 0, "No ether left to withdraw.");
 
         (bool success, ) = (msg.sender).call{value: balance}("");
-        require(success, "Transfer failed!");
+        require(success, "Tranfer failed.");
     }
 }

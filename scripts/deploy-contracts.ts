@@ -1,12 +1,13 @@
 import { ethers } from 'hardhat'
 
 async function main() {
-  const BuddhaNFT = await ethers.getContractFactory("BuddhaNFT")
-  console.log('Deploying BuddhaNFT...')
-  const token = await BuddhaNFT.deploy("base_uri")
+  const baseTokenURI = "ipfs://QmW2zHyJDpvbcoShcWqMwvuZRzzuSQY6eHZ8fXGcRCtuKz/";
 
-  await token.deployed()
-  console.log("BuddhaNFT deployed to: ", token.address)
+  const BuddhaNFT = await ethers.getContractFactory("BuddhaNFT");
+  const buddhaNft = await BuddhaNFT.deploy(baseTokenURI);
+  await buddhaNft.deployed();
+
+  console.log("BuddhaNFT deployed to:", buddhaNft.address);
 
   const NFTMarketplace = await ethers.getContractFactory("NFTMarketplace")
   console.log('Deploying NFTMarketplace...')

@@ -1,3 +1,3 @@
 export const addressContract = '0x5fbdb2315678afecb367f032d93f642f64180aa3'
-export const addressNFTContract = '0x0ce20711258CDa80Da6dfe34506e96d55317f322'
-export const addressMarketContract = '0x2135d14847CA6AC60394fb39B9BDe50Ae46fcc57'
+export const addressNFTContract = '0x7d6B6809051B9B3313Dd3026503875188FfB1087'
+export const addressMarketContract = '0x75703da0cad46299b768B2730bD066C8e6C5144C'
